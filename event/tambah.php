@@ -1,12 +1,7 @@
 <?php
-
 include "../config/koneksi.php";
-
-/* =========================
-   CEK PAKET
-========================= */
-
-if (!isset($_GET['id_paket'])) {
+    // CEK PAKET // 
+   if (!isset($_GET['id_paket'])) {
     header("Location: ../paket/daftar.php");
     exit;
 }
@@ -24,14 +19,10 @@ if (!$paket) {
     die("Maaf, paket tidak ditemukan.");
 }
 
-
-/* =========================
-   PROSES BOOKING
-========================= */
-
+  // PROSES BOOKING //
 if (isset($_POST['simpan'])) {
 
-    // Data customer
+    // Data customer //
     $nama_klien = mysqli_real_escape_string(
         $conn,
         trim($_POST['nama_klien'])
@@ -59,7 +50,7 @@ if (isset($_POST['simpan'])) {
     );
 
 
-    // Data event
+    // Data event //
     $nama_event = mysqli_real_escape_string(
         $conn,
         trim($_POST['nama_event'])
@@ -70,18 +61,14 @@ if (isset($_POST['simpan'])) {
         $_POST['tanggal_event']
     );
 
-
-    // Validasi tanggal
+    // Validasi tanggal //
     if ($tanggal_event < date('Y-m-d')) {
         die("Tanggal event tidak boleh kurang dari hari ini!");
     }
 
-
-    // Lokasi event
+    // Lokasi event //
     $jenis_lokasi = $_POST['jenis_lokasi'] ?? '';
-
     if ($jenis_lokasi == 'evofest') {
-
         $lokasi = mysqli_real_escape_string(
             $conn,
             $_POST['gedung_evofest']
@@ -99,15 +86,9 @@ if (isset($_POST['simpan'])) {
         die("Silakan pilih lokasi event.");
     }
 
-
-    // Status awal
+    // Status awal //
     $status = "Proses";
-
-
-    /* =========================
-       SIMPAN CUSTOMER
-    ========================= */
-
+    // SIMPAN CUSTOMER //
     $query_klien = "
         INSERT INTO Klien
         (nama_klien, no_telepon, email, alamat)
@@ -116,14 +97,8 @@ if (isset($_POST['simpan'])) {
     ";
 
     if (mysqli_query($conn, $query_klien)) {
-
         $id_klien = mysqli_insert_id($conn);
-
-
-        /* =========================
-           SIMPAN EVENT
-        ========================= */
-
+        // SIMPAN EVENT //
         $query_event = "
             INSERT INTO Event
             (
@@ -169,18 +144,14 @@ if (isset($_POST['simpan'])) {
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
     <title>Booking Paket - Event Entertaiment</title>
-
     <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -198,16 +169,11 @@ if (isset($_POST['simpan'])) {
         rel="stylesheet"
         href="../assets/css/style.css"
     >
-
 </head>
-
 <body>
-
     <!-- Navbar -->
     <nav class="navbar-evofest">
-
         <div class="container-evofest">
-
             <a
                 href="../index.php"
                 class="brand"
@@ -215,40 +181,27 @@ if (isset($_POST['simpan'])) {
                 <i class="bi bi-stars"></i>
                 Event Entertaiment
             </a>
-
         </div>
-
     </nav>
-
 
     <!-- Booking -->
     <main class="booking-page">
-
         <div class="container-evofest">
-
             <div class="booking-card">
-
-                <!-- Judul -->
                 <div class="booking-title">
-
                     <div class="detail-icon">
                         <i class="bi bi-calendar-check"></i>
                     </div>
 
                     <h1>Booking Paket</h1>
-
                     <p>
                         Lengkapi data berikut untuk melakukan pemesanan
                     </p>
-
                 </div>
-
 
                 <!-- Paket -->
                 <div class="selected-package">
-
                     <p>Paket yang dipilih</p>
-
                     <h3>
                         <?= htmlspecialchars($paket['nama_paket']); ?>
                     </h3>
@@ -262,29 +215,22 @@ if (isset($_POST['simpan'])) {
                             '.'
                         ); ?>
                     </strong>
-
                 </div>
 
-
                 <div class="detail-garis"></div>
-
-
                 <!-- Form -->
                 <form
                     method="POST"
                     action="tambah.php?id_paket=<?= $id_paket; ?>"
                     autocomplete="off"
                 >
-
                     <!-- Data Customer -->
                     <h4 class="form-section-title">
                         <i class="bi bi-person"></i>
                         Data Pemesan
                     </h4>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             Nama Lengkap
                         </label>
@@ -298,12 +244,9 @@ if (isset($_POST['simpan'])) {
                             autocomplete="off"
                             required
                         >
-
                     </div>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             No. Telepon
                         </label>
@@ -317,12 +260,9 @@ if (isset($_POST['simpan'])) {
                             autocomplete="off"
                             required
                         >
-
                     </div>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             Email
                         </label>
@@ -336,12 +276,9 @@ if (isset($_POST['simpan'])) {
                             autocomplete="off"
                             required
                         >
-
                     </div>
 
-
                     <div class="mb-4">
-
                         <label class="form-label">
                             Alamat
                         </label>
@@ -354,21 +291,15 @@ if (isset($_POST['simpan'])) {
                             autocomplete="off"
                             required
                         ></textarea>
-
                     </div>
-
 
                     <!-- Data Event -->
                     <h4 class="form-section-title">
-
                         <i class="bi bi-calendar-event"></i>
                         Data Event
-
                     </h4>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             Nama Event
                         </label>
@@ -382,12 +313,9 @@ if (isset($_POST['simpan'])) {
                             autocomplete="off"
                             required
                         >
-
                     </div>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             Tanggal Event
                         </label>
@@ -399,22 +327,16 @@ if (isset($_POST['simpan'])) {
                             min="<?= date('Y-m-d'); ?>"
                             required
                         >
-
                     </div>
-
 
                     <!-- Lokasi -->
                     <div class="mb-4">
-
                         <label class="form-label">
                             Lokasi Event
                         </label>
 
-
                         <div class="location-option">
-
                             <div class="location-choice">
-
                                 <input
                                     type="radio"
                                     name="jenis_lokasi"
@@ -423,20 +345,13 @@ if (isset($_POST['simpan'])) {
                                     onchange="pilihLokasi()"
                                     required
                                 >
-
                                 <label for="lokasi_evofest">
-
                                     <i class="bi bi-building"></i>
-
                                     Gedung yang disediakan Event Entertaiment
-
                                 </label>
-
                             </div>
 
-
                             <div class="location-choice">
-
                                 <input
                                     type="radio"
                                     name="jenis_lokasi"
@@ -444,19 +359,12 @@ if (isset($_POST['simpan'])) {
                                     value="sendiri"
                                     onchange="pilihLokasi()"
                                 >
-
                                 <label for="lokasi_sendiri">
-
                                     <i class="bi bi-geo-alt"></i>
-
                                     Tempat pilihan sendiri
-
                                 </label>
-
                             </div>
-
                         </div>
-
 
                         <!-- Pilihan Gedung -->
                         <div
@@ -490,11 +398,8 @@ if (isset($_POST['simpan'])) {
                                 <option value="Hall Festival Event Entertaiment">
                                     Hall Festival Event Entertaiment
                                 </option>
-
                             </select>
-
                         </div>
-
 
                         <!-- Lokasi Sendiri -->
                         <div
@@ -516,15 +421,11 @@ if (isset($_POST['simpan'])) {
                                 maxlength="100"
                                 autocomplete="off"
                             >
-
                         </div>
-
                     </div>
-
 
                     <!-- Tombol -->
                     <div class="detail-button-group">
-
                         <a
                             href="../paket/daftar.php"
                             class="btn-detail-kembali"
@@ -532,7 +433,6 @@ if (isset($_POST['simpan'])) {
                             <i class="bi bi-arrow-left"></i>
                             Kembali
                         </a>
-
 
                         <button
                             type="submit"
@@ -542,18 +442,11 @@ if (isset($_POST['simpan'])) {
                             <i class="bi bi-check-circle"></i>
                             Konfirmasi Booking
                         </button>
-
                     </div>
-
                 </form>
-
             </div>
-
         </div>
-
     </main>
-
-
     <script>
 
         function pilihLokasi() {
@@ -576,19 +469,13 @@ if (isset($_POST['simpan'])) {
             const lokasiInput =
                 document.getElementById("lokasi_sendiri_input");
 
-
             if (evofest.checked) {
-
                 pilihanGedung.style.display = "block";
                 lokasiSendiri.style.display = "none";
-
                 gedung.required = true;
                 lokasiInput.required = false;
-
                 lokasiInput.value = "";
-
             } else if (sendiri.checked) {
-
                 pilihanGedung.style.display = "none";
                 lokasiSendiri.style.display = "block";
                 gedung.required = false;

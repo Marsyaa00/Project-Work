@@ -1,3 +1,59 @@
+<?php
+//!-- JADWAL EVENT YANG DIATUR PENGELOLA --//
+$jadwalEvent = [
+    'konser' => [
+        'tanggal' => '2026-11-01',
+        'jam' => '19:00',
+        'tempat' => 'Ballroom Event Entertaiment'
+    ],
+    'festival' => [
+        'tanggal' => '2026-11-15',
+        'jam' => '09:00',
+        'tempat' => 'Gedung Serbaguna Event Entertaiment'
+    ],
+    'wedding' => [
+        'tanggal' => '2026-11-20',
+        'jam' => '10:00',
+        'tempat' => 'Ballroom Event Entertaiment'
+    ],
+    'seminar' => [
+        'tanggal' => '2026-11-22',
+        'jam' => '08:00',
+        'tempat' => 'Hall Festival Event Entertaiment'
+    ],
+    'birthday' => [
+        'tanggal' => '2026-11-25',
+        'jam' => '16:00',
+        'tempat' => 'Gedung Serbaguna Event Entertaiment'
+    ],
+    'school' => [
+        'tanggal' => '2026-11-28',
+        'jam' => '08:00',
+        'tempat' => 'Hall Festival Event Entertaiment'
+    ]
+];
+
+function formatTanggalIndonesia($tanggal)
+{
+    $timestamp = strtotime($tanggal);
+
+    if ($timestamp === false) {
+        return 'Jadwal belum ditentukan';
+    }
+
+    $bulan = [
+        1 => 'Januari', 'Februari', 'Maret',
+        'April', 'Mei', 'Juni', 'Juli',
+        'Agustus', 'September', 'Oktober',
+        'November', 'Desember'
+    ];
+
+    return date('d', $timestamp) . ' ' .
+        $bulan[(int) date('n', $timestamp)] . ' ' .
+        date('Y', $timestamp);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -6,8 +62,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Event - Event Entertaiment</title>
-
-    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -24,7 +78,6 @@
 </head>
 
 <body>
-
 <main class="event-page">
     <div class="container-evofest">
         <div class="event-title">
@@ -64,24 +117,30 @@
                             lighting, dan dokumentasi untuk berbagai
                             jenis acara.
                         </p>
-
+                        <?php $detailKonser = $jadwalEvent['konser']; ?>
                         <div class="event-info">
-
                             <span>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Gedung & Outdoor
+                                <i class="bi bi-calendar-event"></i>
+                                <?= htmlspecialchars(
+                                    formatTanggalIndonesia($detailKonser['tanggal'])
+                                ); ?>
                             </span>
 
                             <span>
-                                <i class="bi bi-calendar-event"></i>
-                                Sesuai Jadwal Yang Dibooking
+                                <i class="bi bi-clock"></i>
+                                <?= htmlspecialchars($detailKonser['jam']); ?> WIB
+                            </span>
+
+                            <span>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <?= htmlspecialchars($detailKonser['tempat']); ?>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- FESTIVAL BUDAYA -->
+            <!--FESTIVAL BUDAYA-->
             <div class="col-md-6 col-lg-4">
                 <div class="event-card">
                     <div class="event-card-image">
@@ -100,16 +159,23 @@
                             Festival budaya dengan konsep pertunjukan seni,
                             dekorasi, panggung, dan berbagai hiburan.
                         </p>
-
+                        <?php $detailFestival = $jadwalEvent['festival']; ?>
                         <div class="event-info">
                             <span>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Outdoor
+                                <i class="bi bi-calendar-event"></i>
+                                <?= htmlspecialchars(
+                                    formatTanggalIndonesia($detailFestival['tanggal'])
+                                ); ?>
                             </span>
 
                             <span>
-                                <i class="bi bi-calendar-event"></i>
-                                Sesuai Jadwal Yang Dibooking
+                                <i class="bi bi-clock"></i>
+                                <?= htmlspecialchars($detailFestival['jam']); ?> WIB
+                            </span>
+
+                            <span>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <?= htmlspecialchars($detailFestival['tempat']); ?>
                             </span>
                         </div>
                     </div>
@@ -134,18 +200,20 @@
                         <p>
                             Perencanaan acara pernikahan dengan dekorasi,
                             lighting, sound system, dan dokumentasi.
-                        </p>
-
+                        </p>                       
+                        <?php $detailWedding = $jadwalEvent['wedding']; ?>
                         <div class="event-info">
-
-                            <span>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Gedung & Outdoor
-                            </span>
-
                             <span>
                                 <i class="bi bi-calendar-event"></i>
-                                Sesuai Jadwal Yang Dibooking
+                                <?= htmlspecialchars(formatTanggalIndonesia($detailWedding['tanggal'])); ?>
+                            </span>
+                            <span>
+                                <i class="bi bi-clock"></i>
+                                <?= htmlspecialchars($detailWedding['jam']); ?> WIB
+                            </span>
+                            <span>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <?= htmlspecialchars($detailWedding['tempat']); ?>
                             </span>
                         </div>
                     </div>
@@ -172,16 +240,19 @@
                             dilengkapi panggung, sound system, lighting, 
                             layar presentasi, dokumentasi dan perlengkapan acara.
                         </p>
-
+                        <?php $detailSeminar = $jadwalEvent['seminar']; ?>
                         <div class="event-info">
                             <span>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Indoor
-                            </span>
-
-                            <span>
                                 <i class="bi bi-calendar-event"></i>
-                                Sesuai Jadwal Yang Dibooking
+                                <?= htmlspecialchars(formatTanggalIndonesia($detailSeminar['tanggal'])); ?>
+                            </span>
+                            <span>
+                                <i class="bi bi-clock"></i>
+                                <?= htmlspecialchars($detailSeminar['jam']); ?> WIB
+                            </span>
+                            <span>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <?= htmlspecialchars($detailSeminar['tempat']); ?>
                             </span>
                         </div>
                     </div>
@@ -208,16 +279,19 @@
                             entertainment, lighting, dan dokumentasi
                             acara.
                         </p>
-
+                        <?php $detailBirthday = $jadwalEvent['birthday']; ?>
                         <div class="event-info">
                             <span>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Indoor & Outdoor
-                            </span>
-
-                            <span>
                                 <i class="bi bi-calendar-event"></i>
-                                Sesuai Jadwal Yang Dibooking
+                                <?= htmlspecialchars(formatTanggalIndonesia($detailBirthday['tanggal'])); ?>
+                            </span>
+                            <span>
+                                <i class="bi bi-clock"></i>
+                                <?= htmlspecialchars($detailBirthday['jam']); ?> WIB
+                            </span>
+                            <span>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <?= htmlspecialchars($detailBirthday['tempat']); ?>
                             </span>
                         </div>
                     </div>
@@ -244,17 +318,19 @@
                             perpisahan, festival, dan berbagai
                             kegiatan siswa.
                         </p>
-
+                        <?php $detailSchool = $jadwalEvent['school']; ?>
                         <div class="event-info">
-
-                            <span>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Indoor & Outdoor
-                            </span>
-
                             <span>
                                 <i class="bi bi-calendar-event"></i>
-                                Sesuai Jadwal Yang Dibooking
+                                <?= htmlspecialchars(formatTanggalIndonesia($detailSchool['tanggal'])); ?>
+                            </span>
+                            <span>
+                                <i class="bi bi-clock"></i>
+                                <?= htmlspecialchars($detailSchool['jam']); ?> WIB
+                            </span>
+                            <span>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <?= htmlspecialchars($detailSchool['tempat']); ?>
                             </span>
                         </div>
                     </div>
